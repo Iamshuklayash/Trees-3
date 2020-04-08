@@ -1,0 +1,51 @@
+/*
+113 Path Sum II Medium,java
+
+Time Complexity: O(n)
+Space Complexity: O(n)
+Time taken to code: 15 min
+*/
+
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<List<Integer>> pathSum(TreeNode root, int sum) {
+        List<List<Integer>> result = new ArrayList<>();
+        List<Integer> temp = new ArrayList<>();
+        helper(root, result,temp, 0, sum);
+        
+        return result;
+    }
+    public void helper(TreeNode root, List<List<Integer>> result,List<Integer> path, int sum, int target){
+        
+        if(root == null){
+            return ;
+        }
+        //is leaf node?
+        if(root.left == null && root.right == null){
+            //check the sum
+            sum += root.val;
+            if(sum == target)
+            {
+                path.add(root.val);
+                
+                result.add(new ArrayList<Integer>(path));
+                path.remove(path.size()-1);
+            }
+            return;
+        }
+        sum += root.val;
+        path.add(root.val);
+        helper(root.left, result, path, sum, target); 
+        helper(root.right, result, path, sum, target);
+        path.remove(path.size()-1);
+    }
+    
+}
